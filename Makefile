@@ -21,6 +21,10 @@ venv:
 	pre-commit install && \
 	pre-commit autoupdate
 
+.PHONY: download-adult-dataset ## ⏬ download the adult dataset
+download-adult-dataset:
+	python download_adult_dataset.py
+
 .PHONY: dependencies ## ⏬  installs production dependencies
 dependencies:
 	python -m pip install -r requirements.txt
