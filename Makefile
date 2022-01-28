@@ -23,11 +23,11 @@ venv:
 
 .PHONY: download-adult-dataset ## ⏬ download the adult dataset
 download-adult-dataset:
-	skidless download-adult-dataset
+	skidless run-download-adult-dataset
 
 .PHONY: train-preprocessor-and-model ## ⏬ train preprocessor and model on train dataset
 train-preprocessor-and-model:
-	skidless train-preprocessor-and-model
+	skidless run-train-preprocessor-and-model
 
 .PHONY: dependencies ## ⏬  installs production dependencies
 dependencies:

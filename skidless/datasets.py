@@ -42,6 +42,7 @@ def download_adult_dataset() -> None:
         df_train["income_bracket"].str.strip(" ").str.replace(".", "", regex=False)
     )
     df_train.to_csv(train_path)
+    logger.info("✅ training dataset downloaded!")
 
     logger.info("downloading testing data...")
     df_test = pd.read_csv(
@@ -54,3 +55,4 @@ def download_adult_dataset() -> None:
         df_test["income_bracket"].str.strip(" ").str.replace(".", "", regex=False)
     )
     df_test.to_csv(test_path)
+    logger.info("✅ test dataset downloaded!")
