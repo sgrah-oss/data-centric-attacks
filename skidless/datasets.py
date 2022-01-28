@@ -1,6 +1,14 @@
+import logging.config
+
 import pandas as pd
+from rich.logging import RichHandler
 
 from config import config
+
+# logger
+logging.config.dictConfig(config.logging_config)
+logger = logging.getLogger("root")
+logger.handlers[0] = RichHandler(markup=True)
 
 
 def download_adult_dataset() -> None:
@@ -25,7 +33,7 @@ def download_adult_dataset() -> None:
         "income_bracket",
     ]
 
-    print("downloading training data...")
+    logger.info("downloading training data...")
     df_train = pd.read_csv(
         "https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data", names=COLUMNS
     )
@@ -35,7 +43,7 @@ def download_adult_dataset() -> None:
     )
     df_train.to_csv(train_path)
 
-    print("downloading testing data...")
+    logger.info("downloading testing data...")
     df_test = pd.read_csv(
         "https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.test",
         names=COLUMNS,

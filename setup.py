@@ -41,4 +41,5 @@ setup(
     packages=find_namespace_packages(),
     install_requires=[required_packages],
     extras_require={"test": test_packages, "dev": test_packages + dev_packages},
+    entry_points={'console_scripts': ['skidless=skidless.__main__:main']}
 )
