@@ -5,8 +5,15 @@ from sklearn.preprocessing import LabelEncoder
 
 
 class FeaturePreprocessor(BaseEstimator, TransformerMixin):
-    def __init__(self, categorical_features: List[str]):
+    def __init__(
+        self,
+        feature_names: List[str],
+        categorical_features: List[str],
+        numerical_features: List[str],
+    ):
+        self.feature_names = feature_names
         self.categorical_features = categorical_features
+        self.numerical_features = numerical_features
         self.encoders = {feature_name: None for feature_name in categorical_features}
 
     def fit(self, X):
@@ -19,4 +26,4 @@ class FeaturePreprocessor(BaseEstimator, TransformerMixin):
         X_ = X.copy()
         for feature_name in self.categorical_features:
             X_[feature_name] = self.encoders[feature_name].transform(X_[feature_name])
-        return X_
+        return X_[self.feature_names]

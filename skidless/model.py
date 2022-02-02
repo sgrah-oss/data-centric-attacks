@@ -1,9 +1,11 @@
+import json
 import logging.config
 import pickle
 from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
+from kafka import KafkaConsumer
 from lightgbm import LGBMClassifier
 from rich.logging import RichHandler
 from sklearn.metrics import classification_report
@@ -49,7 +51,9 @@ def train_preprocessor_and_model() -> None:
     target_preprocessor = LabelEncoder().fit(y_train)
     y_train = target_preprocessor.transform(y_train)
     ## features
-    feature_preprocessor = FeaturePreprocessor(categorical_features)
+    feature_preprocessor = FeaturePreprocessor(
+        feature_names, categorical_features, numerical_features
+    )
     X_train = feature_preprocessor.fit_transform(X_train)
 
     # model
@@ -94,3 +98,23 @@ def train_preprocessor_and_model() -> None:
     logger.info("storing model...")
     pickle.dump(model, open(Path(config.MODELS_PATH, f"model-{dt_string}"), "wb"))
     pickle.dump(model, open(Path(config.MODELS_PATH, "latest-model"), "wb"))
+
+
+def predicting_message():
+    feature_preprocessor = pickle.load(
+        open(Path(config.MODELS_PATH, "latest-feature-preprocessor"), "rb")
+    )
+    model = pickle.load(open(Path(config.MODELS_PATH, "latest-model"), "rb"))
+
+    consumer = KafkaConsumer(bootstrap_servers=config.KAFKA_HOST)  # , auto_offset_reset='earliest')
+    consumer.subscribe(["app_messages"])
+
+    for msg in consumer:
+        message = json.loads(msg.value)
+        request_id = message["request_id"]
+        x_input = pd.DataFrame(data=message["data"], index=[request_id])
+        logger.info(f"Message ID {request_id}")
+        logger.info(x_input)
+        message_preprocessed = feature_preprocessor.transform(x_input)
+        message_prediction = model.predict(message_preprocessed)
+        logger.info(f"Prediction of earning more than 50>= : {message_prediction.squeeze()}")

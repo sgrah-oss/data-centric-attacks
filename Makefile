@@ -29,6 +29,14 @@ download-adult-dataset:
 train-preprocessor-and-model:
 	skidless run-train-preprocessor-and-model
 
+.PHONY: start-producing-messages ## ⏬ start producing messages
+start-producing-messages:
+	skidless run-start-producing-messages
+
+.PHONY: start-predicting-messages ## ⏬ start predicting messages
+start-predicting-messages:
+	skidless run-start-predicting-messages
+
 .PHONY: dependencies ## ⏬  installs production dependencies
 dependencies:
 	python -m pip install -r requirements.txt
