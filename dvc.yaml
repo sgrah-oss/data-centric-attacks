@@ -1,0 +1,8 @@
+stages:
+  download-adult-dataset:
+    cmd: skidless run-download-adult-dataset
+    deps:
+    - skidless/datasets.py
+    outs:
+    - data/raw/adult.data.csv
+    - data/raw/adult.test.csv

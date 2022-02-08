@@ -1,0 +1,15 @@
+schema: '2.0'
+stages:
+  download-adult-dataset:
+    cmd: skidless run-download-adult-dataset
+    deps:
+    - path: skidless/datasets.py
+      md5: e6667ee99ee8432663f1f11e30d969a2
+      size: 1671
+    outs:
+    - path: data/raw/adult.data.csv
+      md5: c76d5dc52ffbacc6d0263d6140220b76
+      size: 3880419
+    - path: data/raw/adult.test.csv
+      md5: 10fcb664bed108e09c98245d820aa152
+      size: 1934489
