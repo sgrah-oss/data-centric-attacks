@@ -4,6 +4,7 @@ import typer
 
 from skidless.cleaning import clean_adult_dataset
 from skidless.datasets import download_adult_dataset
+from skidless.features import train_preprocessors_and_featurize_adult_dataset
 from skidless.generators import start_producing
 from skidless.model import predicting_message, train_preprocessor_and_model
 
@@ -20,6 +21,12 @@ def run_download_adult_dataset():
 def run_clean_adult_dataset():
     """Download adult dataset"""
     clean_adult_dataset()
+
+
+@app.command()
+def run_train_preprocessors_and_featurize_adult_dataset():
+    """Download adult dataset"""
+    train_preprocessors_and_featurize_adult_dataset()
 
 
 @app.command()

@@ -12,7 +12,7 @@ from sklearn.metrics import classification_report
 from sklearn.preprocessing import LabelEncoder
 
 from config import config
-from skidless.preprocessing import FeaturePreprocessor
+from skidless.features import FeaturePreprocessor
 
 # logger
 logging.config.dictConfig(config.logging_config)
