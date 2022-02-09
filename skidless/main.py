@@ -2,6 +2,7 @@ import threading
 
 import typer
 
+from skidless.cleaning import clean_adult_dataset
 from skidless.datasets import download_adult_dataset
 from skidless.generators import start_producing
 from skidless.model import predicting_message, train_preprocessor_and_model
@@ -13,6 +14,12 @@ app = typer.Typer()
 def run_download_adult_dataset():
     """Download adult dataset"""
     download_adult_dataset()
+
+
+@app.command()
+def run_clean_adult_dataset():
+    """Download adult dataset"""
+    clean_adult_dataset()
 
 
 @app.command()

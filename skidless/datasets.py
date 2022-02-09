@@ -1,6 +1,7 @@
 import logging.config
 
 import pandas as pd
+import wget
 from rich.logging import RichHandler
 
 from config import config
@@ -12,47 +13,18 @@ logger.handlers[0] = RichHandler(markup=True)
 
 
 def download_adult_dataset() -> None:
-    train_path = config.PATH_DATA_RAW / "adult.data.csv"
-    test_path = config.PATH_DATA_RAW / "adult.test.csv"
+    # bronze paths
+    train_bronze_path = "data/bronze/adult.data.csv"
+    test_bronze_path = "data/bronze/adult.test.csv"
 
-    COLUMNS = [
-        "age",
-        "workclass",
-        "fnlwgt",
-        "education",
-        "education_num",
-        "marital_status",
-        "occupation",
-        "relationship",
-        "race",
-        "gender",
-        "capital_gain",
-        "capital_loss",
-        "hours_per_week",
-        "native_country",
-        "income_bracket",
-    ]
-
-    logger.info("downloading training data...")
-    df_train = pd.read_csv(
-        "https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data", names=COLUMNS
+    # download dataset
+    wget.download(
+        url="https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data",
+        out=train_bronze_path,
     )
-    df_train.drop("education_num", axis=1, inplace=True)
-    df_train["income_bracket"] = (
-        df_train["income_bracket"].str.strip(" ").str.replace(".", "", regex=False)
-    )
-    df_train.to_csv(train_path)
     logger.info("✅ training dataset downloaded!")
-
-    logger.info("downloading testing data...")
-    df_test = pd.read_csv(
-        "https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.test",
-        names=COLUMNS,
-        skiprows=1,
+    wget.download(
+        url="https://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.test",
+        out=test_bronze_path,
     )
-    df_test.drop("education_num", axis=1, inplace=True)
-    df_test["income_bracket"] = (
-        df_test["income_bracket"].str.strip(" ").str.replace(".", "", regex=False)
-    )
-    df_test.to_csv(test_path)
     logger.info("✅ test dataset downloaded!")
