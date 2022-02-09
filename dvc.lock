@@ -4,12 +4,50 @@ stages:
     cmd: skidless run-download-adult-dataset
     deps:
     - path: skidless/datasets.py
-      md5: e6667ee99ee8432663f1f11e30d969a2
-      size: 1671
+      md5: f053247801bd7a1c6b63a693527579dd
+      size: 838
     outs:
-    - path: data/raw/adult.data.csv
+    - path: data/bronze/adult.data.csv
+      md5: 5d7c39d7b8804f071cdd1f2a7c460872
+      size: 3974305
+    - path: data/bronze/adult.test.csv
+      md5: 35238206dfdf7f1fe215bbb874adecdc
+      size: 2003153
+  clean-adult-dataset:
+    cmd: skidless run-clean-adult-dataset
+    deps:
+    - path: data/bronze/adult.data.csv
+      md5: 5d7c39d7b8804f071cdd1f2a7c460872
+      size: 3974305
+    - path: data/bronze/adult.test.csv
+      md5: 35238206dfdf7f1fe215bbb874adecdc
+      size: 2003153
+    - path: skidless/cleaning.py
+      md5: ad294f61460a9a99a475e6d5b506ace9
+      size: 1633
+    outs:
+    - path: data/silver/adult.data.csv
       md5: c76d5dc52ffbacc6d0263d6140220b76
       size: 3880419
-    - path: data/raw/adult.test.csv
+    - path: data/silver/adult.test.csv
       md5: 10fcb664bed108e09c98245d820aa152
       size: 1934489
+  train-preprocessors-and-featurize-adult-dataset:
+    cmd: skidless run-train-preprocessors-and-featurize-adult-dataset
+    deps:
+    - path: data/silver/adult.data.csv
+      md5: c76d5dc52ffbacc6d0263d6140220b76
+      size: 3880419
+    - path: skidless/features.py
+      md5: 0d48a9599683b1033d5dad3f446888f4
+      size: 2977
+    outs:
+    - path: data/gold/adult.data.csv
+      md5: e9454fba8edc1c060b3efbb85c247f83
+      size: 1578403
+    - path: models/feature-preprocessor
+      md5: a3371dc8af8073288b660342f37580b0
+      size: 2265
+    - path: models/target-preprocessor
+      md5: cf1afba67cdb2a6a44baf3b72a5c7615
+      size: 255
