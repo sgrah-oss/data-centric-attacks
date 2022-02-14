@@ -8,7 +8,8 @@ from skidless.features import (
     train_preprocessors_and_featurize_train_adult_dataset,
 )
 from skidless.generators import start_producing
-from skidless.model import predicting_message, train_model
+from skidless.model import train_model
+from skidless.predictions import predicting_message
 
 app = typer.Typer()
 

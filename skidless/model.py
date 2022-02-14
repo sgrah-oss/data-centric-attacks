@@ -1,10 +1,7 @@
-import json
 import logging.config
 import pickle
-from pathlib import Path
 
 import pandas as pd
-from kafka import KafkaConsumer
 from lightgbm import LGBMClassifier
 from rich.logging import RichHandler
 from sklearn.metrics import classification_report
@@ -38,6 +35,7 @@ def train_model() -> None:
     train_gold_path = "data/gold/adult.data.parquet"
     df_train = pd.read_parquet(train_gold_path)
     X_train, y_train = df_train[feature_names], df_train[target_name]
+    logger.info("✅ dataset loaded!")
 
     # model
     logger.info("creating model...")
@@ -50,6 +48,7 @@ def train_model() -> None:
         "random_state": 1234,
     }
     model = LGBMClassifier(objective="binary", **model_params).fit(X_train, y_train)
+    logger.info("✅ model trained!")
 
     # evaluation
     logger.info("evaluating model on train dataset...")
@@ -60,23 +59,3 @@ def train_model() -> None:
     logger.info("storing model...")
     pickle.dump(model, open("models/model", "wb"))
     logger.info("✅ model stored!")
-
-
-def predicting_message():
-    feature_preprocessor = pickle.load(
-        open(Path(config.MODELS_PATH, "latest-feature-preprocessor"), "rb")
-    )
-    model = pickle.load(open(Path(config.MODELS_PATH, "latest-model"), "rb"))
-
-    consumer = KafkaConsumer(bootstrap_servers=config.KAFKA_HOST)  # , auto_offset_reset='earliest')
-    consumer.subscribe(["app_messages"])
-
-    for msg in consumer:
-        message = json.loads(msg.value)
-        request_id = message["request_id"]
-        x_input = pd.DataFrame(data=message["data"], index=[request_id])
-        logger.info(f"Message ID {request_id}")
-        logger.info(x_input)
-        message_preprocessed = feature_preprocessor.transform(x_input)
-        message_prediction = model.predict(message_preprocessed)
-        logger.info(f"Prediction of earning more than 50>= : {message_prediction.squeeze()}")

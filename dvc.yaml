@@ -15,7 +15,7 @@ stages:
     outs:
     - data/silver/adult.data.parquet
     - data/silver/adult.test.parquet
-  train-preprocessors-and-featurize-adult-dataset:
+  train-preprocessors-and-featurize-train-adult-dataset:
     cmd: skidless run-train-preprocessors-and-featurize-train-adult-dataset
     deps:
     - skidless/features.py

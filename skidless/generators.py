@@ -4,7 +4,7 @@ import uuid
 from time import sleep
 
 import pandas as pd
-from kafka import KafkaConsumer, KafkaProducer
+from kafka import KafkaProducer
 
 from config import config
 
@@ -24,8 +24,8 @@ def start_producing():
         "native_country",
     ]
     feature_names = numerical_features + categorical_features
-    test_path = config.PATH_DATA_RAW / "adult.test.csv"
-    df_test = pd.read_csv(test_path)
+    test_silver_path = "data/silver/adult.test.parquet"
+    df_test = pd.read_parquet(test_silver_path)
     X_test, y_test = df_test[feature_names], df_test[target_name]
     adult_data_loader = AdultDataLoader(X_test)
 

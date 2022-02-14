@@ -58,8 +58,8 @@ stages:
       md5: 10d256c4584452404bdd0a90baa84073
       size: 699556
     - path: skidless/model.py
-      md5: a91ec8bec693f50d1f1f3d0548b9b84a
-      size: 2654
+      md5: 51df765e61ded3363cd192ba70c69228
+      size: 1801
     outs:
     - path: models/model
       md5: 9573d0d8f5168d3edfec362f6813d33a
