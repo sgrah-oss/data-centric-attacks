@@ -1,2 +1,2 @@
-/adult.data.csv
-/adult.test.csv
+/adult.data.parquet
+/adult.test.parquet

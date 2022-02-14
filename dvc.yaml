@@ -13,14 +13,14 @@ stages:
     - data/bronze/adult.data.csv
     - data/bronze/adult.test.csv
     outs:
-    - data/silver/adult.data.csv
-    - data/silver/adult.test.csv
+    - data/silver/adult.data.parquet
+    - data/silver/adult.test.parquet
   train-preprocessors-and-featurize-adult-dataset:
-    cmd: skidless run-train-preprocessors-and-featurize-adult-dataset
+    cmd: skidless run-train-preprocessors-and-featurize-train-adult-dataset
     deps:
     - skidless/features.py
-    - data/silver/adult.data.csv
+    - data/silver/adult.data.parquet
     outs:
-    - data/gold/adult.data.csv
+    - data/gold/adult.data.parquet
     - models/feature-preprocessor
     - models/target-preprocessor

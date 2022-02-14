@@ -15,9 +15,9 @@ logger = logging.getLogger("root")
 logger.handlers[0] = RichHandler(markup=True)
 
 
-def train_preprocessors_and_featurize_adult_dataset() -> None:
+def train_preprocessors_and_featurize_train_adult_dataset() -> None:
     # silver paths
-    train_silver_path = "data/silver/adult.data.csv"
+    train_silver_path = "data/silver/adult.data.parquet"
 
     # feature types
     target_name = "income_bracket"
@@ -35,7 +35,7 @@ def train_preprocessors_and_featurize_adult_dataset() -> None:
     feature_names = numerical_features + categorical_features
 
     # dataset
-    df_train = pd.read_csv(train_silver_path)
+    df_train = pd.read_parquet(train_silver_path)
     X_train, y_train = df_train[feature_names], df_train[target_name]
 
     # preprocessor
@@ -59,10 +59,10 @@ def train_preprocessors_and_featurize_adult_dataset() -> None:
     df_train.loc[:, target_name] = y_train_preproc
 
     # gold paths
-    train_gold_path = "data/gold/adult.data.csv"
+    train_gold_path = "data/gold/adult.data.parquet"
 
     # save dataset
-    df_train.to_csv(train_gold_path)
+    df_train.to_parquet(train_gold_path)
     logger.info("✅ dataset preprocessed saved!")
 
 
