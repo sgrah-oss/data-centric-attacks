@@ -58,7 +58,7 @@ def train_preprocessors_and_featurize_train_adult_dataset() -> None:
     df_train.loc[:, feature_names] = X_train_preproc
     df_train.loc[:, target_name] = y_train_preproc
 
-    # gold paths
+    # gold path
     train_gold_path = "data/gold/adult.data.parquet"
 
     # save dataset

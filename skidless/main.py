@@ -8,7 +8,7 @@ from skidless.features import (
     train_preprocessors_and_featurize_train_adult_dataset,
 )
 from skidless.generators import start_producing
-from skidless.model import predicting_message, train_preprocessor_and_model
+from skidless.model import predicting_message, train_model
 
 app = typer.Typer()
 
@@ -32,9 +32,9 @@ def run_train_preprocessors_and_featurize_train_adult_dataset():
 
 
 @app.command()
-def run_train_preprocessor_and_model():
+def run_train_model():
     """train preprocessor and model"""
-    train_preprocessor_and_model()
+    train_model()
 
 
 @app.command()

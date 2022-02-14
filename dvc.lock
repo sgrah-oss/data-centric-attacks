@@ -23,8 +23,8 @@ stages:
       md5: 35238206dfdf7f1fe215bbb874adecdc
       size: 2003153
     - path: skidless/cleaning.py
-      md5: acd816ac0ac5dd1e56d91f2e132cf1bf
-      size: 2301
+      md5: 3cf300b923f1b043d005cff49151d829
+      size: 2344
     outs:
     - path: data/silver/adult.data.parquet
       md5: ae529b12a2ff90cae67be2f408949b38
@@ -39,8 +39,8 @@ stages:
       md5: ae529b12a2ff90cae67be2f408949b38
       size: 467088
     - path: skidless/features.py
-      md5: 72a7d6446716f63d8dce94385a37cb0e
-      size: 2956
+      md5: 27c78ae2566978bfa16aa9c5fc7ace0c
+      size: 2998
     outs:
     - path: data/gold/adult.data.parquet
       md5: 10d256c4584452404bdd0a90baa84073
@@ -51,3 +51,16 @@ stages:
     - path: models/target-preprocessor
       md5: cf1afba67cdb2a6a44baf3b72a5c7615
       size: 255
+  train-model:
+    cmd: skidless run-train-model
+    deps:
+    - path: data/gold/adult.data.parquet
+      md5: 10d256c4584452404bdd0a90baa84073
+      size: 699556
+    - path: skidless/model.py
+      md5: a91ec8bec693f50d1f1f3d0548b9b84a
+      size: 2654
+    outs:
+    - path: models/model
+      md5: 9573d0d8f5168d3edfec362f6813d33a
+      size: 294228

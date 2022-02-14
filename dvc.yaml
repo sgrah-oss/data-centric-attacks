@@ -24,3 +24,10 @@ stages:
     - data/gold/adult.data.parquet
     - models/feature-preprocessor
     - models/target-preprocessor
+  train-model:
+    cmd: skidless run-train-model
+    deps:
+    - skidless/model.py
+    - data/gold/adult.data.parquet
+    outs:
+    - models/model
