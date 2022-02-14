@@ -23,11 +23,19 @@ venv:
 
 .PHONY: download-adult-dataset ## ⏬ download the adult dataset
 download-adult-dataset:
-	skidless run-download-adult-dataset
+	dvc repro download-adult-dataset
 
-.PHONY: train-preprocessor-and-model ## ⏬ train preprocessor and model on train dataset
-train-preprocessor-and-model:
-	skidless run-train-preprocessor-and-model
+.PHONY: clean-adult-dataset ## ⏬ clean the adult dataset
+clean-adult-dataset:
+	dvc repro clean-adult-dataset
+
+.PHONY: train-preprocessors-and-featurize-train-adult-dataset ## ⏬ train preprocessor and featurize train adult dataset
+train-preprocessors-and-featurize-train-adult-dataset:
+	dvc repro train-preprocessors-and-featurize-train-adult-dataset
+
+.PHONY: train-model ## ⏬ train model
+train-model:
+	dvc repro train-model
 
 .PHONY: start-producing-messages ## ⏬ start producing messages
 start-producing-messages:
