@@ -2,6 +2,7 @@ import logging.config
 import pickle
 
 import pandas as pd
+import yaml
 from lightgbm import LGBMClassifier
 from rich.logging import RichHandler
 from sklearn.metrics import classification_report
@@ -13,41 +14,33 @@ logging.config.dictConfig(config.logging_config)
 logger = logging.getLogger("root")
 logger.handlers[0] = RichHandler(markup=True)
 
+# params
+feature_params = yaml.safe_load(open("params.yaml"))["features"]
+model_params = yaml.safe_load(open("params.yaml"))["model"]
+
 
 def train_model() -> None:
-    # feature types
-    target_name = "income_bracket"
-    numerical_features = ["age", "fnlwgt", "capital_gain", "capital_loss", "hours_per_week"]
-    categorical_features = [
-        "workclass",
-        "education",
-        "marital_status",
-        "occupation",
-        "relationship",
-        "race",
-        "gender",
-        "native_country",
-    ]
-    feature_names = numerical_features + categorical_features
-
     # dataset
     logger.info("getting dataset...")
     train_gold_path = "data/gold/adult.data.parquet"
     df_train = pd.read_parquet(train_gold_path)
-    X_train, y_train = df_train[feature_names], df_train[target_name]
+    feature_names = feature_params["numerical_features"] + feature_params["categorical_features"]
+    X_train, y_train = df_train[feature_names], df_train[feature_params["target_name"]]
     logger.info("✅ dataset loaded!")
 
     # model
     logger.info("creating model...")
-    model_params = {
-        "learning_rate": 0.1,
-        "max_depth": 3,
-        "n_estimators": 300,
-        "categorical_feature": [feature_names.index(col_name) for col_name in categorical_features],
-        "n_jobs": 1,
-        "random_state": 1234,
+    hyper_parameters = {
+        "learning_rate": model_params["learning_rate"],
+        "max_depth": model_params["max_depth"],
+        "n_estimators": model_params["n_estimators"],
+        "categorical_feature": [
+            feature_names.index(col_name) for col_name in feature_params["categorical_features"]
+        ],
+        "n_jobs": model_params["n_jobs"],
+        "random_state": model_params["random_state"],
     }
-    model = LGBMClassifier(objective="binary", **model_params).fit(X_train, y_train)
+    model = LGBMClassifier(objective="binary", **hyper_parameters).fit(X_train, y_train)
     logger.info("✅ model trained!")
 
     # evaluation

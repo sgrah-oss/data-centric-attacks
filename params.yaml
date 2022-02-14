@@ -1,0 +1,39 @@
+clean:
+  raw_columns: [
+        "age",
+        "workclass",
+        "fnlwgt",
+        "education",
+        "education_num",
+        "marital_status",
+        "occupation",
+        "relationship",
+        "race",
+        "gender",
+        "capital_gain",
+        "capital_loss",
+        "hours_per_week",
+        "native_country",
+        "income_bracket"
+  ]
+
+features:
+  target_name: "income_bracket"
+  numerical_features: ["age", "fnlwgt", "capital_gain", "capital_loss", "hours_per_week"]
+  categorical_features: [
+        "workclass",
+        "education",
+        "marital_status",
+        "occupation",
+        "relationship",
+        "race",
+        "gender",
+        "native_country"
+  ]
+
+model:
+  learning_rate: 0.1
+  max_depth: 3
+  n_estimators: 300
+  n_jobs: 1
+  random_state: 1234

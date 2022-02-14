@@ -12,6 +12,11 @@ stages:
     - skidless/cleaning.py
     - data/bronze/adult.data.csv
     - data/bronze/adult.test.csv
+    params:
+    - clean.raw_columns
+    - features.target_name
+    - features.numerical_features
+    - features.categorical_features
     outs:
     - data/silver/adult.data.parquet
     - data/silver/adult.test.parquet
@@ -20,6 +25,10 @@ stages:
     deps:
     - skidless/features.py
     - data/silver/adult.data.parquet
+    params:
+    - features.target_name
+    - features.numerical_features
+    - features.categorical_features
     outs:
     - data/gold/adult.data.parquet
     - models/feature-preprocessor
@@ -29,5 +38,14 @@ stages:
     deps:
     - skidless/model.py
     - data/gold/adult.data.parquet
+    params:
+    - features.target_name
+    - features.numerical_features
+    - features.categorical_features
+    - model.learning_rate
+    - model.max_depth
+    - model.n_estimators
+    - model.n_jobs
+    - model.random_state
     outs:
     - models/model

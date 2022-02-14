@@ -23,8 +23,42 @@ stages:
       md5: 35238206dfdf7f1fe215bbb874adecdc
       size: 2003153
     - path: skidless/cleaning.py
-      md5: 3cf300b923f1b043d005cff49151d829
-      size: 2344
+      md5: 30ea1ffa09d218b5072e88219892c0f3
+      size: 1892
+    params:
+      params.yaml:
+        clean.raw_columns:
+        - age
+        - workclass
+        - fnlwgt
+        - education
+        - education_num
+        - marital_status
+        - occupation
+        - relationship
+        - race
+        - gender
+        - capital_gain
+        - capital_loss
+        - hours_per_week
+        - native_country
+        - income_bracket
+        features.categorical_features:
+        - workclass
+        - education
+        - marital_status
+        - occupation
+        - relationship
+        - race
+        - gender
+        - native_country
+        features.numerical_features:
+        - age
+        - fnlwgt
+        - capital_gain
+        - capital_loss
+        - hours_per_week
+        features.target_name: income_bracket
     outs:
     - path: data/silver/adult.data.parquet
       md5: ae529b12a2ff90cae67be2f408949b38
@@ -58,9 +92,69 @@ stages:
       md5: 10d256c4584452404bdd0a90baa84073
       size: 699556
     - path: skidless/model.py
-      md5: 51df765e61ded3363cd192ba70c69228
-      size: 1801
+      md5: ae5dc593201ba3557fd215111f64c4e4
+      size: 1790
+    params:
+      params.yaml:
+        features.categorical_features:
+        - workclass
+        - education
+        - marital_status
+        - occupation
+        - relationship
+        - race
+        - gender
+        - native_country
+        features.numerical_features:
+        - age
+        - fnlwgt
+        - capital_gain
+        - capital_loss
+        - hours_per_week
+        features.target_name: income_bracket
+        model.learning_rate: 0.1
+        model.max_depth: 3
+        model.n_estimators: 300
+        model.n_jobs: 1
+        model.random_state: 1234
     outs:
     - path: models/model
       md5: 9573d0d8f5168d3edfec362f6813d33a
       size: 294228
+  train-preprocessors-and-featurize-train-adult-dataset:
+    cmd: skidless run-train-preprocessors-and-featurize-train-adult-dataset
+    deps:
+    - path: data/silver/adult.data.parquet
+      md5: ae529b12a2ff90cae67be2f408949b38
+      size: 467088
+    - path: skidless/features.py
+      md5: ff915749991985196cc2d6b20cea6b85
+      size: 2778
+    params:
+      params.yaml:
+        features.categorical_features:
+        - workclass
+        - education
+        - marital_status
+        - occupation
+        - relationship
+        - race
+        - gender
+        - native_country
+        features.numerical_features:
+        - age
+        - fnlwgt
+        - capital_gain
+        - capital_loss
+        - hours_per_week
+        features.target_name: income_bracket
+    outs:
+    - path: data/gold/adult.data.parquet
+      md5: 10d256c4584452404bdd0a90baa84073
+      size: 699556
+    - path: models/feature-preprocessor
+      md5: a3371dc8af8073288b660342f37580b0
+      size: 2265
+    - path: models/target-preprocessor
+      md5: cf1afba67cdb2a6a44baf3b72a5c7615
+      size: 255
