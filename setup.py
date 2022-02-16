@@ -24,6 +24,7 @@ dev_packages = [
     "pre-commit==2.11.1",
     "vulture==2.3.0",
     "mypy==0.910",
+    "types-PyYAML==6.0.4"
 ]
 
 
@@ -39,7 +40,7 @@ setup(
     ],
     python_requires=">=3.8",
     packages=find_namespace_packages(),
-    #install_requires=[required_packages],
+    install_requires=[required_packages],
     extras_require={"test": test_packages, "dev": test_packages + dev_packages},
     entry_points={
         'console_scripts': [

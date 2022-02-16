@@ -4,8 +4,8 @@ stages:
     cmd: skidless run-download-adult-dataset
     deps:
     - path: skidless/datasets.py
-      md5: f053247801bd7a1c6b63a693527579dd
-      size: 838
+      md5: 14e19f0927e38f429bac2b9bc668e6d0
+      size: 818
     outs:
     - path: data/bronze/adult.data.csv
       md5: 5d7c39d7b8804f071cdd1f2a7c460872
@@ -23,8 +23,8 @@ stages:
       md5: 35238206dfdf7f1fe215bbb874adecdc
       size: 2003153
     - path: skidless/cleaning.py
-      md5: 30ea1ffa09d218b5072e88219892c0f3
-      size: 1892
+      md5: 3afd661936b369857b9ab7cb59046bb1
+      size: 1893
     params:
       params.yaml:
         clean.raw_columns:
@@ -61,10 +61,10 @@ stages:
         features.target_name: income_bracket
     outs:
     - path: data/silver/adult.data.parquet
-      md5: ae529b12a2ff90cae67be2f408949b38
+      md5: 081ef3857fb2d84769d0dcafeb0ec59d
       size: 467088
     - path: data/silver/adult.test.parquet
-      md5: fa77dfd9d7b7edd3cade81c3fae11ca5
+      md5: c9ba0a90794b1084c6096cf6e5796f3f
       size: 237638
   train-preprocessors-and-featurize-adult-dataset:
     cmd: skidless run-train-preprocessors-and-featurize-train-adult-dataset
@@ -89,11 +89,11 @@ stages:
     cmd: skidless run-train-model
     deps:
     - path: data/gold/adult.data.parquet
-      md5: 10d256c4584452404bdd0a90baa84073
+      md5: 96af35f17ffe5b41d66c7dc4e9d10060
       size: 699556
     - path: skidless/model.py
-      md5: ae5dc593201ba3557fd215111f64c4e4
-      size: 1790
+      md5: 3165fe35a3b209113e6a29a781278f34
+      size: 1813
     params:
       params.yaml:
         features.categorical_features:
@@ -119,17 +119,17 @@ stages:
         model.random_state: 1234
     outs:
     - path: models/model
-      md5: 9573d0d8f5168d3edfec362f6813d33a
-      size: 294228
+      md5: 7793f44814676296826f83ca5206feef
+      size: 294230
   train-preprocessors-and-featurize-train-adult-dataset:
     cmd: skidless run-train-preprocessors-and-featurize-train-adult-dataset
     deps:
     - path: data/silver/adult.data.parquet
-      md5: ae529b12a2ff90cae67be2f408949b38
+      md5: 081ef3857fb2d84769d0dcafeb0ec59d
       size: 467088
     - path: skidless/features.py
-      md5: ff915749991985196cc2d6b20cea6b85
-      size: 2778
+      md5: b51d9baa652ceec352e2e90b199b83d3
+      size: 2779
     params:
       params.yaml:
         features.categorical_features:
@@ -150,11 +150,11 @@ stages:
         features.target_name: income_bracket
     outs:
     - path: data/gold/adult.data.parquet
-      md5: 10d256c4584452404bdd0a90baa84073
+      md5: 96af35f17ffe5b41d66c7dc4e9d10060
       size: 699556
     - path: models/feature-preprocessor
-      md5: a3371dc8af8073288b660342f37580b0
-      size: 2265
+      md5: bf69deb50d717ca1713ac493b1fb1820
+      size: 2267
     - path: models/target-preprocessor
-      md5: cf1afba67cdb2a6a44baf3b72a5c7615
-      size: 255
+      md5: 5ad1593d4f27e781c22e621b4d0c5eba
+      size: 257

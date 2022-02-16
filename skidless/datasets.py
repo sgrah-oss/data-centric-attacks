@@ -1,6 +1,5 @@
 import logging.config
 
-import pandas as pd
 import wget
 from rich.logging import RichHandler
 
