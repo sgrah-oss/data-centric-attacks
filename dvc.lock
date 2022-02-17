@@ -112,15 +112,15 @@ stages:
         - capital_loss
         - hours_per_week
         features.target_name: income_bracket
-        model.learning_rate: 0.1
-        model.max_depth: 3
-        model.n_estimators: 300
+        model.learning_rate: 0.01
+        model.max_depth: 6
+        model.n_estimators: 1000
         model.n_jobs: 1
         model.random_state: 1234
     outs:
     - path: models/model
-      md5: 7793f44814676296826f83ca5206feef
-      size: 294230
+      md5: 032e3e48ec12adef116836b6ffa650ed
+      size: 3381161
   train-preprocessors-and-featurize-train-adult-dataset:
     cmd: skidless run-train-preprocessors-and-featurize-train-adult-dataset
     deps:
@@ -168,14 +168,14 @@ stages:
       md5: bf69deb50d717ca1713ac493b1fb1820
       size: 2267
     - path: models/model
-      md5: 7793f44814676296826f83ca5206feef
-      size: 294230
+      md5: 032e3e48ec12adef116836b6ffa650ed
+      size: 3381161
     - path: models/target-preprocessor
       md5: 5ad1593d4f27e781c22e621b4d0c5eba
       size: 257
     - path: skidless/evaluate.py
-      md5: d48502d96ad4458adb4c0bc8fe6aaa23
-      size: 2939
+      md5: 1a89dda48075eb58deeced0ff53eb3dd
+      size: 3129
     params:
       params.yaml:
         features.categorical_features:
@@ -196,11 +196,11 @@ stages:
         features.target_name: income_bracket
     outs:
     - path: metrics/prc.json
-      md5: 90663ec85fd9b8b918ce1bddb97b5444
-      size: 149521
+      md5: 4ab276d31c901c717e1ad483c7fe058d
+      size: 145958
     - path: metrics/roc.json
-      md5: 4ee8a566b9de424381705a9cb03bf106
-      size: 472832
+      md5: ee19c378bded022b7502daba05edd47b
+      size: 447675
     - path: metrics/scores.json
-      md5: 1b46d30fa5269e656dcba934f9cb73cd
-      size: 109
+      md5: 725e72ea2b3091437bc04e461005ccf7
+      size: 108
