@@ -49,3 +49,27 @@ stages:
     - model.random_state
     outs:
     - models/model
+  evaluate-model:
+    cmd: skidless run-evaluate-model
+    deps:
+    - data/silver/adult.test.parquet
+    - models/feature-preprocessor
+    - models/model
+    - models/target-preprocessor
+    - skidless/evaluate.py
+    params:
+    - features.categorical_features
+    - features.numerical_features
+    - features.target_name
+    metrics:
+    - metrics/scores.json:
+        cache: false
+    plots:
+    - metrics/prc.json:
+        cache: false
+        x: recall
+        y: precision
+    - metrics/roc.json:
+        cache: false
+        x: fpr
+        y: tpr

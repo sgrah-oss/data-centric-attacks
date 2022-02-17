@@ -4,6 +4,7 @@ import typer
 
 from skidless.cleaning import clean_adult_dataset
 from skidless.datasets import download_adult_dataset
+from skidless.evaluate import evaluate_model
 from skidless.features import (
     train_preprocessors_and_featurize_train_adult_dataset,
 )
@@ -36,6 +37,12 @@ def run_train_preprocessors_and_featurize_train_adult_dataset():
 def run_train_model():
     """train preprocessor and model"""
     train_model()
+
+
+@app.command()
+def run_evaluate_model():
+    """evaluate model"""
+    evaluate_model()
 
 
 @app.command()

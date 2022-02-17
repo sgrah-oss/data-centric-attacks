@@ -158,3 +158,49 @@ stages:
     - path: models/target-preprocessor
       md5: 5ad1593d4f27e781c22e621b4d0c5eba
       size: 257
+  evaluate-model:
+    cmd: skidless run-evaluate-model
+    deps:
+    - path: data/silver/adult.test.parquet
+      md5: c9ba0a90794b1084c6096cf6e5796f3f
+      size: 237638
+    - path: models/feature-preprocessor
+      md5: bf69deb50d717ca1713ac493b1fb1820
+      size: 2267
+    - path: models/model
+      md5: 7793f44814676296826f83ca5206feef
+      size: 294230
+    - path: models/target-preprocessor
+      md5: 5ad1593d4f27e781c22e621b4d0c5eba
+      size: 257
+    - path: skidless/evaluate.py
+      md5: d48502d96ad4458adb4c0bc8fe6aaa23
+      size: 2939
+    params:
+      params.yaml:
+        features.categorical_features:
+        - workclass
+        - education
+        - marital_status
+        - occupation
+        - relationship
+        - race
+        - gender
+        - native_country
+        features.numerical_features:
+        - age
+        - fnlwgt
+        - capital_gain
+        - capital_loss
+        - hours_per_week
+        features.target_name: income_bracket
+    outs:
+    - path: metrics/prc.json
+      md5: 90663ec85fd9b8b918ce1bddb97b5444
+      size: 149521
+    - path: metrics/roc.json
+      md5: 4ee8a566b9de424381705a9cb03bf106
+      size: 472832
+    - path: metrics/scores.json
+      md5: 1b46d30fa5269e656dcba934f9cb73cd
+      size: 109
