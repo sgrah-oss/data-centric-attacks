@@ -63,6 +63,11 @@ train-model:
 	dvc repro train-model
 
 
+.PHONY: evaluate-model ## ⏬ evaluate model
+evaluate-model:
+	dvc repro evaluate-model
+
+
 .PHONY: start-producing-messages ## ⏬ start producing messages
 start-producing-messages:
 	skidless run-start-producing-messages
