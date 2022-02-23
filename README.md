@@ -3,27 +3,70 @@ skidless
 
 Attack/Defence against data quality in a Machine Learning project
 
-## Mission
-
-For this data exploration, the Framing mandated DataStudio for:
-
-
-
-- DATA PREPARATION - DATA QUALITY
-
-    - Input: Extracts from different sources or sample data set
-
-    - Output: Data quality assessment focused on relevant variables for the use case (detection of missing values, duplicates, heterogeneous formats…), data cleaning and correction, consolidated and preprocessed data set
-
-
-- DATA SCIENCE - FEASIBILITY ASSESSEMENT
-
-    - Input: Consolidated and preprocessed data set
-
-    - Output: Quality and relevance assessment of the statistical modeling based on the sample data set, points of attention, impact analysis and precautions to take in a production/run mode
-
-
 ## Getting Started
+
+How to interact with the project:
+```bash
+make help
+```
+
+Create a Python virtual environment named `venv-skidless` with `conda`,
+```bash
+make create-conda-env
+```
+
+Activate
+```bash
+conda activate venv-skidless
+```
+or configure the virtual environment in your favourite IDE
+
+Install locally the package and pre-commit:
+```bash
+make install-dependencies
+```
+
+## Run the data pipeline
+
+All the stages of the data pipeline are written down in `dvc.yaml` file.
+
+                                               +------------------------+
+                                               | download-adult-dataset |
+                                               +------------------------+
+                                                            *
+                                                            *
+                                                            *
+                                                +---------------------+
+                                                | clean-adult-dataset |
+                                                +---------------------+****
+                                            *****                          *******
+                                        ****                                      *****
+                                     ***                                               *******
+     +-------------------------------------------------------+                                 ***
+     | train-preprocessors-and-featurize-train-adult-dataset |                                   *
+     +-------------------------------------------------------+                                   *
+                       ***              ***                                                     *
+                    ***                    ***                                                  *
+                  **                          ***                                               *
+        +-------------+                          **                                           ***
+        | train-model |***                         **                                  *******
+        +-------------+   ********                   **                           *****
+                                  ********             *                   *******
+                                          ********      **            *****
+                                                  ****    *       ****
+                                                   +----------------+
+                                                   | evaluate-model |
+                                                   +----------------+
+
+
+Execute each stage of the pipeline with `dvc` or `make`. Example:
+```bash
+make download-adult-dataset
+```
+or
+```bash
+dvc repro download-adult-dataset
+```
 
 
 Project Organization
@@ -36,10 +79,6 @@ Project Organization
 │   └── raw            <- The original, immutable data dump.
 │
 ├── models             <- Trained models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a date (for ordering),
-│                         the creator's initials, and a short `_` delimited description, e.g.
-│                         `2020_06_01-initial-data-exploration`.
 │
 ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
 │   └── figures        <- Generated graphics and figures to be used in reporting
@@ -54,27 +93,4 @@ Project Organization
 ├── pyproject.toml     <- central configuration file for packaging and tools
 ├── requirements.txt   <- python dependencies
 └── setup.py           <- Setup file
-```
-
-### Installation process
-
-How to interact with the project:
-```bash
-make help
-```
-
-Create a Python virtual environment, install locally the package and pre-commit:
-```bash
-make venv
-```
-
-Update package
-```bash
-make update-package
-```
-
-## Clear all notebook outputs before committing
-
-```bash
-make clear-notebook-outputs
 ```
