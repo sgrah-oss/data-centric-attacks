@@ -4,12 +4,11 @@ import logging
 import sys
 from pathlib import Path
 
-
-PATH_DATA_RAW = Path('data/raw/')
-PATH_DATA_PROCESSED = Path('data/processed/')
-MODELS_PATH = Path('models/')
-LOGS_DIR = Path('logs/')
-KAFKA_HOST = 'localhost:9092'
+PATH_DATA_RAW = Path("data/raw/")
+PATH_DATA_PROCESSED = Path("data/processed/")
+MODELS_PATH = Path("models/")
+LOGS_DIR = Path("logs/")
+KAFKA_HOST = "localhost:9092"
 
 
 # Logger

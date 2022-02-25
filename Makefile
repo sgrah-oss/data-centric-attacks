@@ -80,9 +80,9 @@ start-predicting-messages:
 
 .PHONY: style ## 🏄‍refactors code app
 style:
-	black ${PROJECT_NAME}
-	flake8 ${PROJECT_NAME}
-	isort ${PROJECT_NAME}
+	black .
+	flake8
+	isort .
 
 
 .PHONY: dead-code ## ☠️ removes dead code
@@ -95,11 +95,6 @@ static-type:
 	python -m mypy --ignore-missing-imports ${PROJECT_NAME}
 
 
-.PHONY: clear-notebook-outputs ## ❇️ clear outputs of notebooks
-clear-notebook-outputs:
-	jupyter nbconvert --clear-output --inplace notebooks/*
-
-
 .PHONY: clean ## 🧹 cleans all files in package app
 clean: dead-code static-type style
 	find . -type f -name "*.DS_Store" -ls -delete
@@ -107,3 +102,18 @@ clean: dead-code static-type style
 	find . | grep -E ".pytest_cache" | xargs rm -rf
 	find . | grep -E ".ipynb_checkpoints" | xargs rm -rf
 	rm -f .coverage
+
+
+.PHONY: clear-notebook-outputs ## ❇️ clear outputs of notebooks
+clear-notebook-outputs:
+	jupyter nbconvert --clear-output --inplace notebooks/*
+
+
+.PHONY: search-security-issues-in-code ## ❇️ run security checks for vulnerabilities
+search-security-issues-in-code:
+	-bandit -r .
+
+
+.PHONY: search-vulnerabilities-in-dependencies ## ❇️ run security checks for vulnerabilities
+search-vulnerabilities-in-dependencies:
+	-safety check

@@ -24,12 +24,12 @@ dev_packages = [
     "pre-commit==2.11.1",
     "vulture==2.3.0",
     "mypy==0.910",
-    "types-PyYAML==6.0.4"
+    "types-PyYAML==6.0.4" "bandit==1.7.2" "safety==1.10.3",
 ]
 
 
 setup(
-    name='skidless',
+    name="skidless",
     version="0.1",
     description="Attack/Defence against data quality in a Machine Learning project",
     author="kaboudan",
@@ -42,9 +42,5 @@ setup(
     packages=find_namespace_packages(),
     install_requires=[required_packages],
     extras_require={"test": test_packages, "dev": test_packages + dev_packages},
-    entry_points={
-        'console_scripts': [
-            'skidless = skidless.main:app'
-        ]
-    }
+    entry_points={"console_scripts": ["skidless = skidless.main:app"]},
 )

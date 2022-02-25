@@ -5,9 +5,7 @@ import typer
 from skidless.cleaning import clean_adult_dataset
 from skidless.datasets import download_adult_dataset
 from skidless.evaluate import evaluate_model
-from skidless.features import (
-    train_preprocessors_and_featurize_train_adult_dataset,
-)
+from skidless.features import train_preprocessors_and_featurize_train_adult_dataset
 from skidless.generators import start_producing
 from skidless.model import train_model
 from skidless.predictions import predicting_message
