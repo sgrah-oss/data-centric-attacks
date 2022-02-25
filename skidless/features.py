@@ -29,10 +29,8 @@ def train_preprocessors_and_featurize_train_adult_dataset() -> None:
     X_train, y_train = df_train[feature_names], df_train[params["target_name"]]
 
     # preprocessor
-    ## target
     target_preprocessor = LabelEncoder()
     y_train_preproc = target_preprocessor.fit_transform(y_train)
-    ## features
     feature_preprocessor = FeaturePreprocessor(
         feature_names, params["categorical_features"], params["numerical_features"]
     )

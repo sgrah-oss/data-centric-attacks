@@ -18,13 +18,12 @@ test_packages = [
 
 dev_packages = [
     "black==20.8b1",
-    "flake8==3.8.3",
     "isort==5.5.3",
     "jupyterlab==3.2.0",
     "pre-commit==2.11.1",
-    "vulture==2.3.0",
-    "mypy==0.910",
-    "types-PyYAML==6.0.4" "bandit==1.7.2" "safety==1.10.3",
+    "pylama==8.3.7",
+    "bandit==1.7.2",
+    "safety==1.10.3",
 ]
 
 

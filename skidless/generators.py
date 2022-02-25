@@ -11,7 +11,6 @@ from config import config
 
 def start_producing():
     # init data loader
-    target_name = "income_bracket"
     numerical_features = ["age", "fnlwgt", "capital_gain", "capital_loss", "hours_per_week"]
     categorical_features = [
         "workclass",
@@ -26,7 +25,7 @@ def start_producing():
     feature_names = numerical_features + categorical_features
     test_silver_path = "data/silver/adult.test.parquet"
     df_test = pd.read_parquet(test_silver_path)
-    X_test, y_test = df_test[feature_names], df_test[target_name]
+    X_test = df_test[feature_names]
     adult_data_loader = AdultDataLoader(X_test)
 
     producer = KafkaProducer(bootstrap_servers=config.KAFKA_HOST)

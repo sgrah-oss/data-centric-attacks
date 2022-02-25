@@ -78,25 +78,24 @@ start-predicting-messages:
 	skidless run-start-predicting-messages
 
 
-.PHONY: style ## 🏄‍refactors code app
-style:
+.PHONY: code-formaters ## 🏄‍ refactors code app
+code-formaters:
 	black .
-	flake8
 	isort .
 
 
-.PHONY: dead-code ## ☠️ removes dead code
-dead-code:
-	vulture ${PROJECT_NAME}
+.PHONY: code-linter ## ✅ run code audit tool for python
+code-linter:
+	pylama -i E501,W503,E226 .
 
-
-.PHONY: static-type ## ✅  checks static types
-static-type:
-	python -m mypy --ignore-missing-imports ${PROJECT_NAME}
+# For compatibility with black
+# E501: Line too long
+# W503: Line break occurred before binary operator
+# E226: Missing white space around arithmetic operator
 
 
 .PHONY: clean ## 🧹 cleans all files in package app
-clean: dead-code static-type style
+clean: code-formaters code-linter
 	find . -type f -name "*.DS_Store" -ls -delete
 	find . | grep -E "(__pycache__|\.pyc|\.pyo)" | xargs rm -rf
 	find . | grep -E ".pytest_cache" | xargs rm -rf
